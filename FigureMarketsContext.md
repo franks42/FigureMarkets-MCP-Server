@@ -1,20 +1,19 @@
-*“Always use the analysis tool for any calculations when numbers are involved”*
+**“Always use the analysis tool for any calculations when numbers are involved”**
 
 Initialize the knowledge context for the Figure Markets and Hastra/Provenance Blockchain.
-Always use the analysis tool for any calculations when numbers are involved!
 Figure Markets (FM) is an exchange that trades various (crypto-)tokens, like Bitcoin, Ether and HASH.
 FM uses the Provenance Blockchain (PB) to record its transactions. HASH is the utility token for the PB.
 Often nano-HASH (nhash) is used as denomination for HASH: 1 HASH equals 1000000000 nhash. Always communicate amounts in HASH.
 Hash is used to pay for the different PB usage fees.
 HASH is held in a wallet which represents an account on the PB.
 The wallet/account can hold other (crypto-)tokens/currencies
-Spendable HASH amount in the wallet account that is not delegated, not vesting, and not unbonding:
-* Spendable HASH leave the account to be sold on the exchange
-* HASH can be bought/exchanged on the exchange with other (crypto-)tokens/currencies from the account/wallet and will be added to the spendable HASH amount
-* Spendable HASH can be transferred to other wallets
-* Spendable HASH can be transferred from other wallets
+The spendable HASH amount in the wallet account represents the amount that is not delegated, not vesting, and not unbonding.
+Spendable HASH:
+* Spendable HASH has to be committed to the exchange before it can be traded
+* Spendable HASH can be send, i.e. transferred, to other wallets
+* Received or transferred HASH from other wallets becomes spendable HASH
 HASH delegation/staking:
-* HASH-holders can delegate HASH to PB-validators.
+* HASH-holders can only delegate spendable and vesting HASH to PB-validators.
 * The delegated or staked HASH will earn delegation-rewards.
 * Delegation-rewards are a percentage of the blockchain awards earned by the validator and proportional to the delegated HASH amount.
 * Delegated HASH cannot be traded or transferred.
@@ -22,12 +21,12 @@ Undelegation/unbonding of HASH:
 * Hash owners can withdraw/undelegate/unbond their delegated HASH from the Validators
 * Delegation withdrawals are subject to a 21 day unbonding period.
 * HASH tokens are liable to be slashed for potential misbehaviors committed by the validator before the unbonding process started
-* Your HASH will not be available for 21 days
 * No staking rewards are earned during unbonding
 * Tokens cannot be transferred or traded during unbonding
-* after the 21 day unbonding period, that HASH amount is added to the account-amount
+* HASH can be redelegated to a Validator during the unbonding period and that redelegated HASH will start earning rewards immediately after the redelegation.
+* after the 21 day unbonding period, that HASH amount is added to either the spendable or the vesting amount depending on the vesting schedule.
 Vesting schedules of HASH:
-* Part of the HASH amount in an account can be subject to a vesting schedule
+* Part of the HASH amount in an account can be subject to a vesting schedule.
 * The vesting schedule dictates a set percentages, e.g. 1/48th, of an initial vesting amount,
   that will be unlocked periodically over time, e.g. every month, until all the initially vesting HASH is all vested and unlocked.
 * The vesting-amount of HASH in an account is locked-up, is restricted, cannot leave the account, and cannot be used for trading or spending.
