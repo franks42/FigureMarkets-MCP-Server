@@ -1,3 +1,5 @@
+*“Always use the analysis tool for any calculations when numbers are involved”*
+
 Initialize the knowledge context for the Figure Markets and Hastra/Provenance Blockchain.
 Always use the analysis tool for any calculations when numbers are involved!
 Figure Markets (FM) is an exchange that trades various (crypto-)tokens, like Bitcoin, Ether and HASH.
