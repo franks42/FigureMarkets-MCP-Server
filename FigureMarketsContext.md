@@ -7,7 +7,7 @@ Often nano-HASH (nhash) is used as denomination for HASH: 1 HASH equals 10000000
 Hash is used to pay for the different PB usage fees.
 HASH is held in a wallet which represents an account on the PB.
 The wallet/account can hold other (crypto-)tokens/currencies
-The spendable HASH amount in the wallet account represents the amount that is not delegated, not vesting, and not unbonding.
+The spendable HASH amount in the wallet account represents the amount that is not vesting, not committed, not delegated, not rewarded, and not unbonding.
 Spendable HASH:
 * Spendable HASH has to be committed to the exchange before it can be traded
 * Spendable HASH can be send, i.e. transferred, to other wallets
@@ -61,3 +61,21 @@ Different types of HASH amounts in the account:
 * A successful trade will decrease the account's committed hash by the amount of traded hash.
 * Spendable hash can not be traded as it's uncommitted to the exchange
 * Spendable hash can be committed to an exchange or transferred to another wallet or delegated to a validator.
+
+liquid_amount equals sum of spending_amount and vesting_amount
+delegated_amount equals sum of staked_amount, rewards_amount, and unbonding_amount
+total_amount equals sum of committed_amount, liquid_amount and delegated_amount
+total_vesting_amount equals difference of initial_vesting_amount and total_vested_amount
+if difference of total_vesting_amount and delegated_amount is positive, then vesting_amount equals that difference else vesting_amount equals zero.
+spending_amount equals difference of liquid_amount and vesting_amount.
+
+At any point in time, the following holds:
+
+The delegated_amount with a validator is the sum of staked_amount, rewards_amount, and unbonding_amount with that validator
+total_delegated_amount = total_staked_amount + total_rewards_amount + total_unbonding_amount
+total_vesting_amount = initial_vesting_amount - total_vested_amount
+if total_vesting_amount - total_delegated_amount > 0: 
+    liquid_vesting_amount = total_vesting_amount - total_delegated_amount 
+else: 
+    liquid_vesting_amount = 0
+spending_amount = total_wallet_amount - committed_amount - liquid_vesting_amount
