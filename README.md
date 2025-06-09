@@ -32,11 +32,13 @@ Make sure `uv` is installed - if not:
 Clone this repo someplace on your computer and change directory into the cloned-repo:
 
 ```git clone https://github.com/franks42/FigureMarkets-MCP-Server.git```
+
 ```cd FigureMarkets-MCP-Server```
 
 Install MCP Python SDK packages with `uv`:
 
 ```uv add "mcp[cli]"```
+
 ```uv add "httpx[cli]"```
 
 Use `mcp install` to add the MCP server configuration to Claude's config file (`"/Users/$USERNAME/Library/Application\ Support/Claude/claude_desktop_config.json"`):
@@ -76,7 +78,9 @@ It's worthwhile to look at that document if you want to understand better how Cl
 #### Example Questions to ask Claude
 
 ```What is the current HASH price on the Figure Markets?```
+
 ```How about ETH and XRD?```
+
 ```How is the overall exchange doing?```
 
 In many cases you'll have question about the assets in your wallet. The wallet is identified by an address, which is a looong incomprehensible number of characters. The easiest way to interact with Claude about your wallet, is to give it a name such that you have to copy and paste it once, like:
@@ -86,11 +90,17 @@ In many cases you'll have question about the assets in your wallet. The wallet i
 After this you can talk about that wallet like:
 
 ```How much HASH do i have in my wallet?```
+
 ```What assets are in my wallet?```
+
 ```Review my wallet.```
+
 ```What do you think about my delegation amount?```
+
 ```Do I have vesting hash?```
+
 ```What does the vesting schedule look like?```
+
 ```Analyze my wallet's portfolio.```
 
 Etc., etc...
