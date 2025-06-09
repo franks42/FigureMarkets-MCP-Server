@@ -17,6 +17,25 @@
 **All token calculations must be done after their amounts are converted to smallest denom units, like nhash, nbtc, uylds, uusdc.**
 **Always display and present the amount of any token in the standard token denom, like HASH, ETH, BTC, YLDS or USDC.**
 
+### Table Formatting Requirements
+
+**All generated tables must follow these formatting standards:**
+- **Decimal Alignment**: All numeric columns must be right-aligned to align numbers on decimal points
+- **Currency Formatting**: Use proper currency notation ($XXX.XX format)
+- **Denomination Headers**: Place token denominations (HASH, ETH, etc.) in column headers, not repeated in cells
+- **Consistent Spacing**: Maintain consistent decimal places for similar value types
+- **Professional Layout**: Use right-alignment (`:`) in markdown table syntax for numeric columns
+
+**Example Table Header Formatting:**
+```markdown
+| Wallet Name | Amount (HASH) | Value (USD) |
+|-------------|-------------:|------------:|
+| wallet1     |    1,234,567 |   $32,100.43 |
+| wallet2     |          123 |      $3.21 |
+```
+
+**Always apply right-alignment markdown syntax (`|` followed by `-` and `:`) to numeric columns for proper decimal alignment.**
+
 ---
 
 ## 🚨 CRITICAL CALCULATIONS - MUST FOLLOW EXACT SEQUENCE
