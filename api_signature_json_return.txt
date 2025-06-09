@@ -1,0 +1,525 @@
+
+
+
+#########################################################################################
+
+last 'size' trades for 'HASH-USD' trading pair on FM
+
+https://www.figuremarkets.com/service-hft-exchange/api/v1/trades/HASH-USD?size=2
+
+{
+  "denom": "HASH",
+  "symbol": "HASH-USD",
+  "marketId": "HASH-USD",
+  "matches": [
+    {
+      "id": "347D8T40020E",
+      "price": 0.024,
+      "quantity": 30889.599,
+      "created": "2025-06-05T16:59:38.975344995Z"
+    },
+    {
+      "id": "347A322G820E",
+      "price": 0.025,
+      "quantity": 400,
+      "created": "2025-06-05T16:50:12.459384564Z"
+    }
+  ]
+}
+
+#########################################################################################
+https://www.figuremarkets.com/service-hft-exchange/api/v1/markets
+
+{
+  "data": [
+    {
+      "id": "BTC-USD",
+      "symbol": "BTC-USD",
+      "displayName": "BTC-USD",
+      "denom": "BTC",
+      "quoteDenom": "USD",
+      "bestBid": "103145.31",
+      "bestAsk": "103228.98",
+      "midMarketPrice": "103187.14",
+      "priceChange24h": "-2075.230726510",
+      "percentageChange24h": -0.019717,
+      "lastTradedPrice": "103535.08",
+      "volume24h": "80588.441816",
+      "high24h": "105959.00",
+      "low24h": "103113.00",
+      "indexPrice": "103173.40",
+      "tradeCount24h": 19,
+      "denomExponent": 4,
+      "quoteExponent": 2,
+      "pricePrecision": 2,
+      "quantityPrecision": 4,
+      "sizeIncrement": "0.0001",
+      "priceIncrement": "0.01",
+      "minTradeQuantity": "0.0001",
+      "marketLocation": "US",
+      "marketLocations": [
+        "US"
+      ],
+      "marketType": "CRYPTO",
+      "ep3InstrumentId": "BTC-USD",
+      "exchangePrice": "103173.399000000",
+      "proTradeAvailable": true,
+      "baseVolume24h": "0.7697",
+      "contractAddressUrl": [
+        "https://explorer.provenance.io/asset/nbtc.figure.se"
+      ],
+      "contractAddress": [
+        "nbtc.figure.se"
+      ],
+      "unifiedCryptoassetId": "unifiedCryptoAssetId"
+    },
+    ...
+  ],
+  "pagination": {
+    "page": 1,
+    "size": 16,
+    "totalPages": 1,
+    "totalCount": 16
+  }
+}
+
+#########################################################################################
+https://api.provenance.io/provenance/attribute/v1/accountdata/{account}
+
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet_address}
+
+{
+  "accountType": "Continuous Vesting Account",
+  "address": "pb###",
+  "accountNumber": 1290,
+  "sequence": 113,
+  "publicKey": {
+    "type": "secp256k1",
+    "base64": "Ag1HhurR3q2tL6ci3qKS2CM8HCahtvXZTrQpp56g7+iJ",
+    "sigList": [
+      {
+        "idx": 0,
+        "address": "pb##"
+      }
+    ]
+  },
+  "accountName": null,
+  "attributes": [
+    {
+      "attribute": "kyc-aml.passport.pb",
+      "data": "ZXlKc1lXSmxiQ0k2SWt0WlExOUJUVXdpTENKc1pYWmxiQ0k2TUN3aWFYTnpkV1ZrUkdGMFpTSTZJakl3TWpJdE1ETXRNVEpVTURBNk1EQTZNREJhSWl3aVpYaHdhWEpoZEdsdmJrUmhkR1VpT2lJeU1ESXpMVEF6TFRFeVZEQXdPakF3T2pBd1dpSXNJbkJsYm1ScGJtY2lPbVpoYkhObExDSndZWE56Y0c5eWRGVjFhV1FpT25zaWRtRnNkV1VpT2lKbE56TTFNems0TWkxbU9UaG1MVFE1WkRRdFlUSTBZeTB3WlRRNE5UUmlaalZtT1RNaWZTd2lZV05qY21Wa2FYUmhkR2x2YmxKbGNYVmxjM1JWZFdsa0lqcDdJblpoYkhWbElqb2laV1ZrT1dJd05Ea3RNakF3WXkwMFpHRmtMV0k1T0RZdE5UYzRPVEkwWkdKaVltWTFJbjE5"
+    },
+    {
+      "attribute": "approved.ylds.pb",
+      "data": "eyJwYXNzcG9ydFV1aWQiOnsidmFsdWUiOiI4ODJjY2Q2MC1jMjUzLTRkZTgtODNmMS04MDE4MWY1YjExNzMifX0="
+    },
+    {
+      "attribute": "figure.kyc.passport.pb",
+      "data": "eyJwYXNzcG9ydFV1aWQiOnsidmFsdWUiOiI4ODJjY2Q2MC1jMjUzLTRkZTgtODNmMS04MDE4MWY1YjExNzMifSwicGFzc3BvcnRIYXNoIjoidnB3ZU1xbU9YVzBtbVVoaWdsMEt0VzNhL2IvU0dQV0VXWXNQY1MvdThJbz0iLCJzdGF0dXMiOnsia3ljU3RhdHVzIjoiVkFMSUQiLCJhdHRlc3RhdGlvblN0YXR1cyI6IlZBTElEIiwiYXR0ZXN0YXRpb25WZXJpZmljYXRpb25TdGF0dXMiOiJWQUxJRCJ9fQ=="
+    },
+    {
+      "attribute": "figureomni.wireref.omnibus.pb",
+      "data": "Q2dwamNubHdkRzluY21GdEV0WUJDa0VFUXpvc0JsSW9sSmZPUlpmTm91STJBbkQ2R1UwaHlrc2tZeW9WWG05dEpaalhtSER3YkRoNXpHKzBsOFQ4V0htalFaVklOUnhvMndNditHejVmU3RGUFJKQUFBQUFEQUFBQUFBQUFBQUFBQUFBQUF2UzJLWkhlK0xZOHo4bzFYdW1yL1RJWXNIeTd5TUxqeWVHLzYzbHpWRGNwVmZqemNqRzJTbTQ5bDl5WXZnZXJScFBBQUFBRENQWkVjZjM3dWFVT1N5UWUzMHNjNnFrNmVDMzBtS2pHSG9lcGh4K0ZPZDJ2ZlB2VmZOYkl4a1lHWTNJRllwaHVlUFZOQ0t4V05NQ3hFdHpUNldyZzBJWHNBcnA5WXFOMUZkeFZBPT0="
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "MTIxNA=="
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "NjQz"
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "MTIwNg=="
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "NjI3"
+    },
+    {
+      "attribute": "figuremarkets.fiat.pb",
+      "data": "eyJhY2NvdW50SWQiOiJhZThhODIzMy1iNjhhLTQxN2QtYmVjYi0wYjQ3MjVlMDk3NzMifQ=="
+    }
+  ],
+  "tokens": {
+    "fungibleCount": 0,
+    "nonFungibleCount": 3
+  },
+  "isContract": false,
+  "accountAum": {
+    "amount": "149462.412940341763",
+    "denom": "USD"
+  },
+  "isVesting": true,
+  "flags": {
+    "isContract": false,
+    "isVesting": true,
+    "isIca": false
+  },
+  "accountOwner": null
+}
+
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet}/balances?count=10&page=1
+
+{
+  "pages": 1,
+  "results": [
+    {
+      "amount": "10000000",
+      "denom": "ibc/616E26A85AD20A3DDEAEBDDE7262E3BA9356C557BC15CACEA86768D7D51FA703",
+      "pricePerToken": null,
+      "totalBalancePrice": null
+    },
+    {
+      "amount": "402495000",
+      "denom": "neth.figure.se",
+      "pricePerToken": {
+        "amount": "0.00000255755",
+        "denom": "USD"
+      },
+      "totalBalancePrice": {
+        "amount": "1029.40108725",
+        "denom": "USD"
+      }
+    },
+    {
+      "amount": "8607553982838339",
+      "denom": "nhash",
+      "pricePerToken": {
+        "amount": "0.000000000017",
+        "denom": "USD"
+      },
+      "totalBalancePrice": {
+        "amount": "146328.417708251763",
+        "denom": "USD"
+      }
+    },
+    ...
+  ],
+  "total": 9,
+  "rollupTotals": {
+
+  }
+}
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet}
+
+{
+  "accountType": "Continuous Vesting Account",
+  "address": "pb###",
+  "accountNumber": 1290,
+  "sequence": 113,
+  "publicKey": {
+    "type": "secp256k1",
+    "base64": "Ag1HhurR3q2tL6ci3qKS2CM8HCahtvXZTrQpp56g7+iJ",
+    "sigList": [
+      {
+        "idx": 0,
+        "address": "pb###"
+      }
+    ]
+  },
+  "accountName": null,
+  "attributes": [
+    {
+      "attribute": "kyc-aml.passport.pb",
+      "data": "ZXlKc1lXSmxiQ0k2SWt0WlExOUJUVXdpTENKc1pYWmxiQ0k2TUN3aWFYTnpkV1ZrUkdGMFpTSTZJakl3TWpJdE1ETXRNVEpVTURBNk1EQTZNREJhSWl3aVpYaHdhWEpoZEdsdmJrUmhkR1VpT2lJeU1ESXpMVEF6TFRFeVZEQXdPakF3T2pBd1dpSXNJbkJsYm1ScGJtY2lPbVpoYkhObExDSndZWE56Y0c5eWRGVjFhV1FpT25zaWRtRnNkV1VpT2lKbE56TTFNems0TWkxbU9UaG1MVFE1WkRRdFlUSTBZeTB3WlRRNE5UUmlaalZtT1RNaWZTd2lZV05qY21Wa2FYUmhkR2x2YmxKbGNYVmxjM1JWZFdsa0lqcDdJblpoYkhWbElqb2laV1ZrT1dJd05Ea3RNakF3WXkwMFpHRmtMV0k1T0RZdE5UYzRPVEkwWkdKaVltWTFJbjE5"
+    },
+    {
+      "attribute": "approved.ylds.pb",
+      "data": "eyJwYXNzcG9ydFV1aWQiOnsidmFsdWUiOiI4ODJjY2Q2MC1jMjUzLTRkZTgtODNmMS04MDE4MWY1YjExNzMifX0="
+    },
+    {
+      "attribute": "figure.kyc.passport.pb",
+      "data": "eyJwYXNzcG9ydFV1aWQiOnsidmFsdWUiOiI4ODJjY2Q2MC1jMjUzLTRkZTgtODNmMS04MDE4MWY1YjExNzMifSwicGFzc3BvcnRIYXNoIjoidnB3ZU1xbU9YVzBtbVVoaWdsMEt0VzNhL2IvU0dQV0VXWXNQY1MvdThJbz0iLCJzdGF0dXMiOnsia3ljU3RhdHVzIjoiVkFMSUQiLCJhdHRlc3RhdGlvblN0YXR1cyI6IlZBTElEIiwiYXR0ZXN0YXRpb25WZXJpZmljYXRpb25TdGF0dXMiOiJWQUxJRCJ9fQ=="
+    },
+    {
+      "attribute": "figureomni.wireref.omnibus.pb",
+      "data": "Q2dwamNubHdkRzluY21GdEV0WUJDa0VFUXpvc0JsSW9sSmZPUlpmTm91STJBbkQ2R1UwaHlrc2tZeW9WWG05dEpaalhtSER3YkRoNXpHKzBsOFQ4V0htalFaVklOUnhvMndNditHejVmU3RGUFJKQUFBQUFEQUFBQUFBQUFBQUFBQUFBQUF2UzJLWkhlK0xZOHo4bzFYdW1yL1RJWXNIeTd5TUxqeWVHLzYzbHpWRGNwVmZqemNqRzJTbTQ5bDl5WXZnZXJScFBBQUFBRENQWkVjZjM3dWFVT1N5UWUzMHNjNnFrNmVDMzBtS2pHSG9lcGh4K0ZPZDJ2ZlB2VmZOYkl4a1lHWTNJRllwaHVlUFZOQ0t4V05NQ3hFdHpUNldyZzBJWHNBcnA5WXFOMUZkeFZBPT0="
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "MTIxNA=="
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "NjQz"
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "MTIwNg=="
+    },
+    {
+      "attribute": "memberapproval.sc.pb",
+      "data": "NjI3"
+    },
+    {
+      "attribute": "figuremarkets.fiat.pb",
+      "data": "eyJhY2NvdW50SWQiOiJhZThhODIzMy1iNjhhLTQxN2QtYmVjYi0wYjQ3MjVlMDk3NzMifQ=="
+    }
+  ],
+  "tokens": {
+    "fungibleCount": 0,
+    "nonFungibleCount": 3
+  },
+  "isContract": false,
+  "accountAum": {
+    "amount": "140751.075249333424",
+    "denom": "USD"
+  },
+  "isVesting": true,
+  "flags": {
+    "isContract": false,
+    "isVesting": true,
+    "isIca": false
+  },
+  "accountOwner": null
+}
+
+#########################################################################################
+https://service-explorer.provenance.io/api/v3/accounts/{wallet}/vesting
+
+{
+  "dataAsOfDate": "2025-06-05T21:06:31",
+  "endTime": "2029-05-22T21:30:09",
+  "originalVestingList": [
+    {
+      "amount": "20607331274614469",
+      "denom": "nhash"
+    }
+  ],
+  "startTime": "2025-06-22T21:30:09",
+  "periodicVestingList": [
+    {
+      "length": 2628000,
+      "coins": [
+        {
+          "amount": "438326102286380",
+          "denom": "nhash"
+        }
+      ],
+      "vestingDate": "2025-07-23T07:30:09",
+      "isVested": false
+    },
+    {
+      "length": 2628000,
+      "coins": [
+        {
+          "amount": "438326102286380",
+          "denom": "nhash"
+        }
+      ],
+      "vestingDate": "2025-08-22T17:30:09",
+      "isVested": false
+    },
+    ...
+  ],
+  "currentlyVested": []
+}
+
+#########################################################################################
+https://api.provenance.io/provenance/exchange/v1/commitments/account/{wallet}
+
+{
+  "commitments": [
+    {
+      "market_id": 1,
+      "amount": [
+        {
+          "denom": "neth.figure.se",
+          "amount": "402495000"
+        },
+        {
+          "denom": "nhash",
+          "amount": "122911906691"
+        },
+        {
+          "denom": "nsol.figure.se",
+          "amount": "5566900000"
+        },
+        {
+          "denom": "uusd.trading",
+          "amount": "55884778"
+        },
+        {
+          "denom": "uusdc.figure.se",
+          "amount": "1000000"
+        },
+        {
+          "denom": "uxrp.figure.se",
+          "amount": "443360000"
+        },
+        {
+          "denom": "uylds.fcc",
+          "amount": "201350122"
+        }
+      ]
+    }
+  ]
+}
+#########################################################################################
+https://figuremarkets.com/service-hft-exchange/api/v1/assets
+
+{
+  "data": [
+    {
+      "name": "BTC",
+      "displayName": "Bitcoin",
+      "subtitle": "Bitcoin is the first global, decentralized digital asset",
+      "description": "Bitcoin, was created in 2008 and launched as an open-source platform. It was built with Byzantine fault tolerance and Sybil attack resistance in mind, allowing for the Bitcoin ledger to be distributed reliably across Bitcoin nodes without the need for a trusted, centralized authority to verify and approve transactions.",
+      "websiteUrl": "https://bitcoin.org/en/",
+      "whitepaperUrl": "https://bitcoin.org/bitcoin.pdf",
+      "type": "CRYPTO",
+      "fixedPrice": false,
+      "exponent": 9,
+      "provenanceMarkerName": "nbtc.figure.se",
+      "provider": "MPC_ASSET",
+      "iconUrl": "https://www.datocms-assets.com/119559/1727365552-btc.svg",
+      "displayExponent": 4,
+      "network": "Bitcoin",
+      "depositConfig": {
+        "processingTime": "~ Hours",
+        "minimumQuantity": 0.0001
+      },
+      "withdrawConfig": {
+        "processingTime": "~ Hours"
+      },
+      "sortOrder": 1000,
+      "displayCategory": "CRYPTO",
+      "haircutPercentage": 0,
+      "contractAddressUrls": [
+        "https://explorer.provenance.io/asset/nbtc.figure.se"
+      ],
+      "contractAddresses": [
+        "nbtc.figure.se"
+      ],
+      "unifiedCryptoassetId": "unifiedCryptoAssetId"
+    },
+    ...
+  ],
+  "pagination": {
+    "page": 1,
+    "size": 15,
+    "totalPages": 1,
+    "totalCount": 15
+  }
+}
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet}/rewards
+
+{
+  "rewards": [
+    {
+      "validatorAddress": "pb###",
+      "reward": [
+        {
+          "amount": "2181697267770",
+          "denom": "nhash",
+          "pricePerToken": {
+            "amount": "0.000000000024",
+            "denom": "USD"
+          },
+          "totalBalancePrice": {
+            "amount": "52.36073442650208",
+            "denom": "USD"
+          }
+        }
+      ]
+    },
+    ...
+  ],
+  "total": [
+    {
+      "amount": "12463572223207",
+      "denom": "nhash",
+      "pricePerToken": {
+        "amount": "0.000000000024",
+        "denom": "USD"
+      },
+      "totalBalancePrice": {
+        "amount": "299.125733356968607669149435459528",
+        "denom": "USD"
+      }
+    }
+  ]
+}
+
+or
+
+{
+  "rewards": [],
+  "total": []
+}
+
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet}/delegations
+
+{
+  "pages": 1,
+  "results": [
+    {
+      "delegatorAddr": "pb###",
+      "validatorSrcAddr": "pb###",
+      "validatorDstAddr": null,
+      "amount": {
+        "amount": "2000000000000000",
+        "denom": "nhash"
+      },
+      "initialBal": null,
+      "shares": "2000000000000000",
+      "block": null,
+      "endTime": null
+    },
+    ...
+  ],
+  "total": 7,
+  "rollupTotals": {
+    "bondedTotal": {
+      "amount": "12000000000004030",
+      "denom": "nhash"
+    }
+  }
+}
+
+or
+
+{
+  "pages": 1,
+  "results": [],
+  "total": 0,
+  "rollupTotals": {
+    "bondedTotal": {
+      "amount": "0",
+      "denom": "nhash"
+    }
+  }
+}
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet}/unbonding
+
+{
+  "records": [],
+  "rollupTotals": {
+    "unbondingTotal": {
+      "amount": "0",
+      "denom": "nhash"
+    }
+  }
+}
+
+#########################################################################################
+https://service-explorer.provenance.io/api/v2/accounts/{wallet}/redelegations
+
+{
+  "records": [],
+  "rollupTotals": {
+    "redelegationTotal": {
+      "amount": "0",
+      "denom": "nhash"
+    }
+  }
+}
+
