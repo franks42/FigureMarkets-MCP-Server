@@ -9,7 +9,9 @@ Note: Only tested on a MacOS 15.5 M1 laptop as a local MCP server over stdio.
 Install instruction use brew and uv. 
 (... use your own and you're on your own ;-) )
 
-This MCP server is tested with and works with Anthropic's Claude desktop for MacOS. Install Claude desktop for MacOS:
+Note: this MCP server is only tested with Anthropic's Claude desktop for MacOS. 
+
+Install Claude desktop for MacOS:
 
 ```https://claude.ai/download```
 
