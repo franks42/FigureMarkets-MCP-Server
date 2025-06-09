@@ -101,6 +101,63 @@ Data Sources:
 - delegated_total_amount: Calculated by summing individual delegation bucket amounts
 ```
 
+## Figure Markets AUM Calculation Limitation
+
+**CRITICAL: Figure Markets' `accountAum` value is INCOMPLETE and excludes staked/delegated assets.**
+
+The `accountAum.amount` returned by `fetch_current_fm_account_info()` only includes:
+- Available HASH amounts
+- Committed HASH amounts  
+- Other liquid assets (USD, YLDS, ETH, etc.)
+
+**It EXCLUDES:**
+- Delegated/staked HASH (`delegated_staked_amount`)
+- Reward HASH (`delegated_rewards_amount`)
+- Unbonding HASH (`delegated_unbonding_amount`)
+- Redelegating HASH (`delegated_redelegated_amount`)
+
+### Correct Total Wallet Value Calculation
+
+**Always calculate TRUE total wallet value using this formula:**
+
+```
+true_wallet_value = sum_of_all_asset_values
+
+Where sum_of_all_asset_values includes:
+- All available asset amounts × current prices
+- All committed HASH × HASH price
+- All delegated HASH buckets × HASH price
+  (staked + rewards + unbonding + redelegating)
+- All other assets × their respective prices
+```
+
+**Never rely on `accountAum` alone for total wallet value - it severely understates wallets with significant staking activity.**
+
+**When presenting wallet summaries, always show:**
+1. Figure Markets AUM (for reference)
+2. Calculated True Total Value (the accurate number)
+3. Note the discrepancy if significant (>10% difference)
+
+### Implementation Guidelines
+
+```
+// Example calculation for true wallet value
+const trueWalletValue = 
+  (available_total_hash + committed_hash + delegated_staked_hash + 
+   delegated_rewards_hash + delegated_unbonding_hash + delegated_redelegated_hash) * hash_price +
+  other_asset_1_amount * other_asset_1_price +
+  other_asset_2_amount * other_asset_2_price +
+  // ... continue for all assets
+
+// Compare with Figure Markets AUM
+const discrepancy = trueWalletValue - figureMarketsAUM;
+const discrepancyPercent = (discrepancy / trueWalletValue) * 100;
+
+if (discrepancyPercent > 10) {
+  // Note significant discrepancy in analysis
+}
+```
+
 ## Vesting System Implementation (HASH Only)
 
 ### HASH-Exclusive Vesting
