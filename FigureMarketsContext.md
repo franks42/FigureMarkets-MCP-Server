@@ -139,7 +139,14 @@ Since `delegated_rewards_amount` does not earn rewards, the optimal strategy is:
 - **Restrictions**: 
   - ❌ **Cannot redelegate** during waiting period
   - ✅ **Can undelegate** (transitions to unbonding state)
-- **Completion**: Automatically moves to `delegated_staked_amount`
+- **Completion**: **Automatically transitions to `delegated_staked_amount` on day 22**
+
+**⏰ Redelegation Completion (Day 22):**
+- **Automatic State Change**: `delegated_redelegated_amount` → `delegated_staked_amount`
+- ✅ **Rewards continue uninterrupted** throughout and after transition
+- ✅ **All redelegation restrictions removed** (can redelegate again)
+- ✅ **Full operational flexibility restored**
+- ✅ **No user action required** - transition happens automatically
 
 #### **2. Unbonding Waiting Period**  
 - **Duration**: 21 days
@@ -166,13 +173,17 @@ Since `delegated_rewards_amount` does not earn rewards, the optimal strategy is:
 
 ### **State Transition Flow**
 ```
-available → staked_i → redelegate_i_to_j → redelegated_j → staked_j
+available → staked_i → redelegate_i_to_j → redelegated_j → staked_j (automatic after 21 days)
                 ↓                                      ↓
             unbonding_i ← ← ← ← ← ← ← ← ← ← ← ← unbonding_j
                 ↓                                      ↓  
             available ← ← ← ← ← ← ← ← ← ← ← ← ← ← available
 
 rewards_i → available (claim operation - immediate)
+
+REDELEGATION LIFECYCLE:
+Day 1-21: redelegated_j (earning rewards, cannot redelegate)
+Day 22+:  staked_j (earning rewards, full flexibility restored)
 ```
 
 ---
@@ -209,6 +220,12 @@ rewards_i → available (claim operation - immediate)
 
 **Consequence:** Suboptimal ROI from delegation strategy
 
+### MISTAKE #6: Misunderstanding Redelegation Outcomes
+❌ **WRONG:** Treating redelegated HASH as permanently restricted
+✅ **CORRECT:** Redelegated HASH automatically becomes normal staked HASH after 21 days with full flexibility
+
+**Consequence:** Incorrect long-term delegation planning and liquidity assessments
+
 ---
 
 ## WORKED CALCULATION EXAMPLE
@@ -223,26 +240,29 @@ rewards_i → available (claim operation - immediate)
   - `delegated_staked_amount`: 12,000,000 HASH
   - `delegated_rewards_amount`: 12,548 HASH
   - `delegated_unbonding_amount`: 0 HASH
-  - `delegated_redelegated_amount`: 0 HASH
+  - `delegated_redelegated_amount`: 1,000 HASH
 
 **Step-by-Step Correct Calculation:**
 
 1. **Calculate delegated total:**
-   `delegated_total_amount = 12,000,000 + 12,548 + 0 + 0 = 12,012,548 HASH`
+   `delegated_total_amount = 12,000,000 + 12,548 + 0 + 1,000 = 12,013,548 HASH`
 
 2. **Apply vesting coverage logic:**
-   `vesting_coverage_deficit = 20,607,331 - 12,012,548 = 8,594,783 HASH`
-   `available_unvested_amount = max(0, 8,594,783) = 8,594,783 HASH`
+   `vesting_coverage_deficit = 20,607,331 - 12,013,548 = 8,593,783 HASH`
+   `available_unvested_amount = max(0, 8,593,783) = 8,593,783 HASH`
 
 3. **Calculate available spendable:**
-   `available_spendable = 8,607,554 - 123 - 8,594,783 = 12,648 HASH`
+   `available_spendable = 8,607,554 - 123 - 8,593,783 = 13,648 HASH`
 
 4. **Calculate total HASH:**
-   `total_hash_in_wallet = 8,607,554 + 12,012,548 = 20,620,102 HASH`
+   `total_hash_in_wallet = 8,607,554 + 12,013,548 = 20,621,102 HASH`
 
-**✅ CORRECT RESULT:** 12,648 HASH spendable (positive!), 8,594,783 HASH in coverage deficit
+**✅ CORRECT RESULT:** 13,648 HASH spendable (positive!), 8,593,783 HASH in coverage deficit
 
-**Strategic Insight**: The 12,548 HASH in `delegated_rewards_amount` should be claimed and restaked to optimize ROI.
+**Strategic Insights**: 
+- The 12,548 HASH in `delegated_rewards_amount` should be claimed and restaked to optimize ROI
+- The 1,000 HASH in `delegated_redelegated_amount` will automatically become normal staked HASH after 21 days with full flexibility restored
+- No action required for redelegated HASH - transition to staked status happens automatically
 
 **❌ WRONG CALCULATION (Common Mistake):**
 If you incorrectly used: `available_unvested_amount = 20,607,331 HASH`
@@ -269,7 +289,7 @@ Each block written to the Provenance Blockchain may contain transactions that af
 - **Unbonding Completions**: 21-day periods ending, moving HASH from `delegated_unbonding_amount` to available buckets
 - **Continuous Vesting**: Block-by-block vesting reducing `vesting_coverage_deficit` (if applicable)
 - **Redelegation Transitions**: HASH moving between validators affecting `delegated_redelegated_amount`
-- **Redelegation Completions**: 21-day redelegation periods ending, moving HASH from `delegated_redelegated_amount` to `delegated_staked_amount`
+- **Redelegation Completions**: 21-day redelegation periods ending, **automatically moving HASH from `delegated_redelegated_amount` to `delegated_staked_amount` with full flexibility restored**
 - **Reward Claims**: Immediate transfers from `delegated_rewards_amount` to `available_spendable_amount`
 
 ### Data Consistency Considerations
@@ -318,6 +338,7 @@ wallet_total_amount (total HASH in wallet)
     ├── delegated_staked_amount (earning rewards) ⭐ EARNS REWARDS
     ├── delegated_rewards_amount (accumulated rewards) ❌ DOES NOT EARN REWARDS
     ├── delegated_redelegated_amount (transitioning between validators) ⭐ EARNS REWARDS  
+    │   └── (automatically becomes delegated_staked_amount after 21 days)
     └── delegated_unbonding_amount (21-day waiting period) ❌ DOES NOT EARN REWARDS
 ```
 
@@ -337,7 +358,7 @@ Data Sources:
 
 Reward Earning Status:
 - delegated_staked_amount: ⭐ EARNS REWARDS (should maintain)
-- delegated_redelegated_amount: ⭐ EARNS REWARDS (should maintain)  
+- delegated_redelegated_amount: ⭐ EARNS REWARDS (should maintain, automatically becomes staked after 21 days)  
 - delegated_rewards_amount: ❌ DOES NOT EARN REWARDS (should claim and restake)
 - delegated_unbonding_amount: ❌ DOES NOT EARN REWARDS (waiting for completion)
 ```
@@ -433,10 +454,13 @@ available_spendable_amount (freely tradable and transferable) without
 violating vesting restrictions.
 ```
 
-**Example**: If `vesting_total_unvested_amount = 10,000 HASH` and `delegated_total_amount = 15,000 HASH`:
+**Important Note on Redelegated HASH**: When calculating vesting coverage, `delegated_redelegated_amount` provides the same coverage as staked HASH since both are locked and earning. After 21 days, redelegated HASH automatically becomes staked HASH with full operational flexibility restored.
+
+**Example**: If `vesting_total_unvested_amount = 10,000 HASH` and `delegated_total_amount = 15,000 HASH` (including 1,000 redelegated):
 - `vesting_coverage_deficit = 10,000 - 15,000 = -5,000 HASH`
 - `available_unvested_amount = 0 HASH` (no coverage deficit)
 - **Liquidity opportunity**: 5,000 HASH could be undelegated to increase `available_spendable_amount` while maintaining full vesting coverage
+- **Future flexibility**: 1,000 redelegated HASH will automatically gain full flexibility after 21 days
 
 ### Vesting Coverage Deficit Analysis
 
@@ -484,7 +508,7 @@ vesting_coverage_deficit = available_unvested_amount
 - `fetch_total_delegation_data(wallet_address)`: **NEW CONSOLIDATED API** - Returns complete delegation data including:
   - `delegated_staked_amount`: Currently staked HASH - ⭐ **EARNS REWARDS**
   - `delegated_rewards_amount`: Accumulated HASH rewards - ❌ **DOES NOT EARN REWARDS** - **should be claimed and restaked**
-  - `delegated_redelegated_amount`: HASH transitioning between validators - ⭐ **EARNS REWARDS**
+  - `delegated_redelegated_amount`: HASH transitioning between validators - ⭐ **EARNS REWARDS** - **automatically becomes staked after 21 days**
   - `delegated_unbonding_amount`: HASH in unbonding period - ❌ **DOES NOT EARN REWARDS**
   - `delegated_total_delegated_amount`: Total delegated amount (calculated)
   - `delegated_earning_amount`: Earning delegation amount (staked + redelegated)
@@ -522,7 +546,7 @@ For comprehensive wallet analysis, follow this sequence:
    - `fetch_total_delegation_data()` - **NEW CONSOLIDATED API** returns all delegation buckets:
      - `delegated_staked_amount` - ⭐ **EARNS REWARDS**
      - `delegated_rewards_amount` - ❌ **DOES NOT EARN REWARDS** - **recommend claiming**
-     - `delegated_redelegated_amount` - ⭐ **EARNS REWARDS**  
+     - `delegated_redelegated_amount` - ⭐ **EARNS REWARDS** - **automatically becomes staked after 21 days**
      - `delegated_unbonding_amount` - ❌ **DOES NOT EARN REWARDS**
 6. **HASH Exchange Status**: `fetch_available_committed_amount()` (HASH only)
 
@@ -534,6 +558,7 @@ For comprehensive wallet analysis, follow this sequence:
 - Other assets (ETH, SOL, USDC, XRP, YLDS) do not have delegation or vesting data
 - Use `fetch_current_fm_account_balance_data()` for balances of all asset types
 - **Monitor `delegated_rewards_amount` for optimization opportunities** - recommend claiming and restaking
+- **Understand `delegated_redelegated_amount` lifecycle** - automatically becomes fully flexible staked HASH after 21 days
 
 ### Calculation Process
 
@@ -573,4 +598,4 @@ All MCP server functions are read-only and cannot modify wallet state or execute
 
 ---
 
-**📋 SUMMARY: Always follow the CRITICAL CALCULATIONS sequence above to ensure accurate wallet analysis and avoid common mistakes that lead to negative available amounts. Remember that only staked and redelegated HASH earn rewards - accumulated rewards should be claimed and restaked for optimal ROI.**
+**📋 SUMMARY: Always follow the CRITICAL CALCULATIONS sequence above to ensure accurate wallet analysis and avoid common mistakes that lead to negative available amounts. Remember that only staked and redelegated HASH earn rewards - accumulated rewards should be claimed and restaked for optimal ROI. Redelegated HASH automatically transitions to fully flexible staked HASH after 21 days with no user action required.**
