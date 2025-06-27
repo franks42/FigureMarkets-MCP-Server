@@ -1,10 +1,16 @@
 # Information about Trading, Transferring, Staking, and Vesting of HASH Utility Tokens on Figure Markets and the Provenance Blockchain
-## System Documentation for MCP Server Integration - UPDATED VERSION
+## System Documentation for MCP Server Integration - UPDATED VERSION WITH VESTING CORRECTIONS
 
 **Platform:** Figure Markets Exchange on Provenance Blockchain  
 **Purpose:** Reference documentation for Claude MCP server wallet analysis  
-**Version:** Current Production System  
+**Version:** Current Production System + Vesting Calculation Fixes  
 **Date:** June 27, 2025
+
+---
+
+## 🚨 **CRITICAL VESTING CALCULATION CORRECTIONS ADDED**
+
+**MAJOR UPDATE**: This version includes critical fixes for vesting wallet analysis to prevent massive market influence calculation errors (10-100x overstatement). New "Controllable HASH" calculations ensure accurate whale status and market position assessments.
 
 ---
 
@@ -41,6 +47,7 @@
 ## 🚨 CRITICAL CALCULATIONS - MUST FOLLOW EXACT SEQUENCE
 
 **⚠️ COMMON MISTAKE:** Do NOT use `vesting_total_unvested_amount` directly as `available_unvested_amount`
+**⚠️ CRITICAL VESTING ERROR:** Do NOT treat all owned HASH as "controllable" in vesting wallets
 
 ### HASH WALLET CALCULATION SEQUENCE (Required for Accurate Analysis)
 
@@ -86,6 +93,17 @@ available_spendable_amount = available_total_amount - available_committed_amount
 total_hash_in_wallet = available_total_amount + delegated_total_amount
 ```
 
+#### **🚨 Step 6: Calculate CONTROLLABLE HASH (CRITICAL FOR MARKET ANALYSIS)**
+```
+IF isVesting = true THEN:
+    controllable_hash = (available_total_amount + delegated_total_amount) - vesting_total_unvested_amount
+    controllable_hash = max(0, controllable_hash)
+ELSE:
+    controllable_hash = available_total_amount + delegated_total_amount
+```
+
+**CRITICAL INSIGHT**: For vesting wallets, the CONTROLLABLE amount is what can actually be used/traded/influenced in the market. This is often DRAMATICALLY different from total holdings.
+
 ---
 
 ## ⚠️ CRITICAL TERMINOLOGY DISTINCTIONS
@@ -104,8 +122,10 @@ total_hash_in_wallet = available_total_amount + delegated_total_amount
 - **`available_spendable_amount`** = Freely transferable HASH amount (calculated)
 - **`delegated_total_amount`** = Sum of all delegation buckets (calculated)
 - **`total_hash_in_wallet`** = Complete HASH holdings (calculated)
+- **🚨 `controllable_hash`** = HASH that can actually influence markets/trading (calculated)
 
 **🚨 NEVER use `vesting_total_unvested_amount` as `available_unvested_amount` directly!**
+**🚨 NEVER use `total_hash_in_wallet` as `controllable_hash` for vesting wallets!**
 
 ---
 
@@ -226,6 +246,14 @@ Day 22+:  staked_j (earning rewards, full flexibility restored)
 
 **Consequence:** Incorrect long-term delegation planning and liquidity assessments
 
+### MISTAKE #7: Treating All Owned HASH as Controllable in Vesting Wallets
+❌ **WRONG:** `controllable_hash = available_total_amount + delegated_total_amount` (for vesting wallets)
+✅ **CORRECT:** `controllable_hash = (available_total_amount + delegated_total_amount) - vesting_total_unvested_amount`
+
+**Consequence:** MASSIVE overstatement of market influence and actionable positions. In extreme cases, this can show whale-level influence when actual control is minimal.
+
+**Example Error Impact:** A wallet with 34M HASH total might appear to control 1.2% of circulating supply, when actual controllable amount is only 1.4M HASH (0.05% of circulating) due to vesting restrictions.
+
 ---
 
 ## WORKED CALCULATION EXAMPLE
@@ -257,12 +285,19 @@ Day 22+:  staked_j (earning rewards, full flexibility restored)
 4. **Calculate total HASH:**
    `total_hash_in_wallet = 8,607,554 + 12,013,548 = 20,621,102 HASH`
 
-**✅ CORRECT RESULT:** 13,648 HASH spendable (positive!), 8,593,783 HASH in coverage deficit
+5. **🚨 Calculate controllable HASH (CRITICAL FOR MARKET ANALYSIS):**
+   `controllable_hash = (8,607,554 + 12,013,548) - 20,607,331 = 13,771 HASH`
+
+**✅ CORRECT RESULT:** 
+- 13,648 HASH spendable (positive!)
+- 8,593,783 HASH in coverage deficit  
+- **13,771 HASH controllable** (only 0.067% of total holdings!)
 
 **Strategic Insights**: 
 - The 12,548 HASH in `delegated_rewards_amount` should be claimed and restaked to optimize ROI
 - The 1,000 HASH in `delegated_redelegated_amount` will automatically become normal staked HASH after 21 days with full flexibility restored
-- No action required for redelegated HASH - transition to staked status happens automatically
+- **CRITICAL**: Despite owning 20.6M HASH, only 13,771 HASH (0.067%) is actually controllable due to vesting restrictions
+- **Market Analysis**: This wallet would have minimal market influence (not whale status) despite large total holdings
 
 **❌ WRONG CALCULATION (Common Mistake):**
 If you incorrectly used: `available_unvested_amount = 20,607,331 HASH`
@@ -340,6 +375,8 @@ wallet_total_amount (total HASH in wallet)
     ├── delegated_redelegated_amount (transitioning between validators) ⭐ EARNS REWARDS  
     │   └── (automatically becomes delegated_staked_amount after 21 days)
     └── delegated_unbonding_amount (21-day waiting period) ❌ DOES NOT EARN REWARDS
+
+🚨 controllable_hash = (available_total_amount + delegated_total_amount) - vesting_total_unvested_amount
 ```
 
 ### Fundamental Relationships
@@ -492,6 +529,90 @@ vesting_coverage_deficit = available_unvested_amount
 
 **Note**: Vesting schedules apply exclusively to HASH tokens. All other assets in the wallet remain fully liquid regardless of any HASH vesting restrictions.
 
+## 🎯 CONTROLLABLE HASH CALCULATION (CRITICAL FOR MARKET ANALYSIS)
+
+### **The Critical Distinction: Owned vs Controllable**
+
+**MOST COMMON ANALYSIS ERROR**: Treating all owned HASH as "controllable" when analyzing market influence, whale status, or trading power.
+
+**For Non-Vesting Wallets:**
+```
+controllable_hash = available_total_amount + delegated_total_amount
+(All owned HASH is controllable)
+```
+
+**For Vesting Wallets (CRITICAL):**
+```
+controllable_hash = (available_total_amount + delegated_total_amount) - vesting_total_unvested_amount
+controllable_hash = max(0, controllable_hash)
+```
+
+### **Why This Matters for Analysis**
+
+**Market Influence Calculations:**
+- ❌ **WRONG**: `market_share = total_owned_hash / network_circulating_supply`
+- ✅ **CORRECT**: `market_share = controllable_hash / network_circulating_supply`
+
+**Whale Status Determination:**
+- ❌ **WRONG**: Base whale status on total holdings
+- ✅ **CORRECT**: Base whale status on controllable holdings
+
+**Trading Power Assessment:**
+- ❌ **WRONG**: Assume all owned HASH can influence markets
+- ✅ **CORRECT**: Only controllable HASH provides actual market influence
+
+### **Real-World Impact Example**
+
+**Scenario**: Vesting wallet with large total holdings
+- `available_total_amount`: 616,369 HASH
+- `delegated_total_amount`: 20,009,475 HASH  
+- `total_owned`: 20,625,844 HASH
+- `vesting_total_unvested_amount`: 20,536,693 HASH
+
+**Wrong Calculation**: 20,625,844 HASH controllable (whale status)
+**Correct Calculation**: (616,369 + 20,009,475) - 20,536,693 = 89,151 HASH controllable (standard holder)
+
+**Analysis Impact**: 
+- Wrong: 1.2% of circulating supply (whale)
+- Correct: 0.05% of circulating supply (standard holder)
+- **Error magnitude**: 24x overstatement of market influence
+
+### **When to Use Each Calculation**
+
+**Use Total Owned HASH for:**
+- Portfolio valuation
+- Long-term wealth assessment  
+- Tax calculations
+- Net worth analysis
+
+**Use Controllable HASH for:**
+- Market influence analysis
+- Whale status determination
+- Trading power assessment
+- Liquidity planning
+- Strategic position evaluation
+
+### **Implementation Guidelines**
+
+```javascript
+function calculateControllableHash(walletData) {
+  const totalOwned = walletData.available_total_amount + walletData.delegated_total_amount;
+  
+  if (walletData.isVesting) {
+    const controllable = totalOwned - walletData.vesting_total_unvested_amount;
+    return Math.max(0, controllable);
+  } else {
+    return totalOwned;
+  }
+}
+
+function getMarketInfluence(controllableHash, networkCirculatingSupply) {
+  return (controllableHash / networkCirculatingSupply) * 100;
+}
+```
+
+**🚨 CRITICAL REMINDER**: Always use controllable HASH (not total owned) when analyzing market position, influence, or trading capabilities.
+
 ## MCP Server Integration
 
 ### Available API Functions
@@ -598,4 +719,4 @@ All MCP server functions are read-only and cannot modify wallet state or execute
 
 ---
 
-**📋 SUMMARY: Always follow the CRITICAL CALCULATIONS sequence above to ensure accurate wallet analysis and avoid common mistakes that lead to negative available amounts. Remember that only staked and redelegated HASH earn rewards - accumulated rewards should be claimed and restaked for optimal ROI. Redelegated HASH automatically transitions to fully flexible staked HASH after 21 days with no user action required.**
+**📋 SUMMARY: Always follow the CRITICAL CALCULATIONS sequence above to ensure accurate wallet analysis and avoid common mistakes that lead to negative available amounts. Remember that only staked and redelegated HASH earn rewards - accumulated rewards should be claimed and restaked for optimal ROI. Redelegated HASH automatically transitions to fully flexible staked HASH after 21 days with no user action required. MOST IMPORTANTLY: For vesting wallets, always calculate controllable HASH = (available + delegated) - vesting_unvested to determine actual market influence and actionable positions.**
