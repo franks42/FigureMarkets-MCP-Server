@@ -37,7 +37,7 @@
 | Wallet Name | Amount (HASH) | Value (USD) |
 |-------------|-------------:|------------:|
 | wallet1     |    1,234,567 |   $32,100.43 |
-| wallet2     |          123 |      $3.21 |
+| wallet2     |          123 |        $3.21 |
 ```
 
 **Always apply right-alignment markdown syntax (`|` followed by `-` and `:`) to numeric columns for proper decimal alignment.**
