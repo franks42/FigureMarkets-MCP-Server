@@ -27,7 +27,7 @@
 
 **All generated tables must follow these formatting standards:**
 - **Decimal Alignment**: All numeric columns must be right-aligned to align numbers on decimal points
-- **Currency Formatting**: Use proper currency notation ($XXX.XX format)
+- **Currency Formatting**: Use proper currency notation ($XXX.XX forethmat)
 - **Denomination Headers**: Place token denominations (HASH, ETH, etc.) in column headers, not repeated in cells
 - **Consistent Spacing**: Maintain consistent decimal places for similar value types
 - **Professional Layout**: Use right-alignment (`:`) in markdown table syntax for numeric columns
@@ -57,7 +57,7 @@
 available_total_amount ← fetch_available_total_amount()
 available_committed_amount ← fetch_available_committed_amount()
 
-// New consolidated delegation API (replaces individual delegation calls)
+// Delegation API
 delegation_data ← fetch_total_delegation_data()
 delegated_staked_amount ← delegation_data.delegated_staked_amount
 delegated_rewards_amount ← delegation_data.delegated_rewards_amount
@@ -184,6 +184,7 @@ Since `delegated_rewards_amount` does not earn rewards, the optimal strategy is:
 - `delegated_staked_amount` = sum of all `staked_i` across validators
 - `delegated_redelegated_amount` = sum of all `redelegated_i` across validators  
 - `delegated_rewards_amount` = sum of all `rewarded_i` across validators
+- `delegated_unbonding_amount` = sum of all `unbonding_i` across validators
 
 **For understanding mechanics**, each validator maintains separate buckets:
 - `staked_i` = HASH staked with validator_i
@@ -375,6 +376,7 @@ wallet_total_amount (total HASH in wallet)
     ├── delegated_redelegated_amount (transitioning between validators) ⭐ EARNS REWARDS  
     │   └── (automatically becomes delegated_staked_amount after 21 days)
     └── delegated_unbonding_amount (21-day waiting period) ❌ DOES NOT EARN REWARDS
+        └── (automatically becomes available_spendable_amount or available_unvested_amount depending on staking and vesting after 21 days)
 
 🚨 controllable_hash = (available_total_amount + delegated_total_amount) - vesting_total_unvested_amount
 ```
@@ -640,12 +642,6 @@ function getMarketInfluence(controllableHash, networkCirculatingSupply) {
 - **Consistent data state** - all delegation amounts from same blockchain block
 - **Additional calculated fields** provided automatically
 - **Better performance** for wallet analysis workflows
-
-**DEPRECATED APIs (no longer use):**
-- ~~`fetch_delegated_staked_amount(wallet_address)`~~ - **REPLACED by fetch_total_delegation_data()**
-- ~~`fetch_delegated_rewards_amount(wallet_address)`~~ - **REPLACED by fetch_total_delegation_data()**
-- ~~`fetch_delegated_redelegation_amount(wallet_address)`~~ - **REPLACED by fetch_total_delegation_data()**
-- ~~`fetch_delegated_unbonding_amount(wallet_address)`~~ - **REPLACED by fetch_total_delegation_data()**
 
 #### Exchange Information
 - `fetch_available_committed_amount(wallet_address)`: HASH committed for trading - **returns actual blockchain data, not calculated**
